@@ -1,9 +1,23 @@
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-    <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+{% extends "base.html" %}
+
+{% block content %}
+  <br>
+  <div class="jumbotron center">
+    <h1>Here are the list of questions to vote.</h1>
+  </div>
+  <br>
+  {% if latest_question_list %}
+    <div class="list-group">
+      <ul>
+        {% for question in latest_question_list %}
+        <a href="{% url 'polls:detail' question.id %}" class="list-group-item list-group-item-action list-group-item-success">{{ question.question_text }}</a>
+        <br>
+        {% endfor %}
+      </ul>
+    </div>
+  {% else %}
+    <div class="jumbotron center">
+      <p>No polls are available.</p>
+    </div>
+  {% endif %}
+{% endblock %}

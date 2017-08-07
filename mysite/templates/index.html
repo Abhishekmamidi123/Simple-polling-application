@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <br>
+  <div class="jumbotron center">
+    <h1>Welcome to poll the Questions</h1><br>
+    <a class="btn btn-primary btn-lg" href="{% url 'polls:index' %}">Start polling</a>
+  </div>
+{% endblock %}

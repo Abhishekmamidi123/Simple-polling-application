@@ -1,9 +1,22 @@
-<h1>{{ question.question_text }}</h1>
+{% extends "base.html" %}
 
-<ul>
-{% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
-{% endfor %}
-</ul>
+{% block content %}
+  <br>
+  <div class="jumbotron center">
 
-<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+    <h1>Number of votes for "{{ question.question_text }}" </h1>
+    <br>
+    <a class="btn btn-primary btn-lg" href="{% url 'polls:index' %}">List of Questions</a>
+    <br><br>
+    <a href="{% url 'polls:detail' question.id %}" class="btn btn-success btn-lg">Vote</a>
+  </div>
+
+  <br>
+  <ul>
+  {% for choice in question.choice_set.all %}
+    <li class="list-group-item list-group-item-info">{{ choice.choice_text }} --> {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+    <br>
+  {% endfor %}
+  </ul>
+
+{% endblock %}

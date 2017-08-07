@@ -1,12 +1,33 @@
-<h1>{{ question.question_text }}</h1>
+{% extends "base.html" %}
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% block content %}
+  <br>
+  <div class="jumbotron center">
+    <h1>List of choices for "{{ question.question_text }}"</h1>
+    <br>
+    <a class="btn btn-primary btn-lg" href="{% url 'polls:index' %}">List of Questions</a>
+    <br><br>
+    <a class="btn btn-success btn-lg" href="{% url 'polls:results' question.id %}">See Results</a>
+  </div>
+  
+  <h1>{{ question.question_text }}</h1><br>
 
-<form action="{% url 'polls:vote' question.id %}" method="post">
-{% csrf_token %}
-{% for choice in question.choice_set.all %}
-    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
-    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
-{% endfor %}
-<input type="submit" value="Vote" />
-</form>
+  {% if error_message %}
+    <div class="list-group">
+      <ul>
+        <li class="list-group-item list-group-item-action list-group-item-danger">{{ error_message }}</li>
+        <br>
+      </ul>
+    </div>
+  {% endif %}
+
+  <form action="{% url 'polls:vote' question.id %}" method="POST">
+    {% csrf_token %}
+    {% for choice in question.choice_set.all %}
+      <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"/>
+      <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+    {% endfor %}
+    <input type="submit" class="btn btn-primary" name="" value="Vote">
+  </form>
+
+{% endblock %}
